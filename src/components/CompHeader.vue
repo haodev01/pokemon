@@ -70,7 +70,8 @@ export default {
       this.$toast.open({
         type: "success",
         message: "Đăng xuất tài khoản thành công",
-        position: "top-right"
+        position: "top-right",
+        duration: 2000
       });
     }
   }

@@ -1,6 +1,11 @@
 <template>
   <div>
     <CompHeader />
+
+    <div class="flex">
+      <router-link to="/">Giao diện dạng lưới</router-link>
+      <router-link to="/Table">Giao diện dạng bảng</router-link>
+    </div>
     <div class="product-list">
       <div
         class="product"
@@ -142,5 +147,19 @@ export default {
 }
 .v-pagination__item--active {
   background: red !important;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 24px 36px;
+  gap: 24px;
+}
+.flex a {
+  text-decoration: none;
+  background: purple;
+  padding: 8px 10px;
+  color: #fff;
+  border-radius: 8px;
 }
 </style>

@@ -67,13 +67,12 @@ export default {
         this.error = "Tên người dùng đã tồn tại. Vui lòng chọn tên khác.";
       } else {
         existingUsers.push(newUser);
-
         localStorage.setItem("users", JSON.stringify(existingUsers));
-
         this.$toast.open({
           type: "success",
           message: "Đăng ký tài khoản thành công",
-          position: "top-right"
+          position: "top-right",
+          duration: 2000
         });
         // this.error = "";
         this.$router.push("/login");

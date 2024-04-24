@@ -63,12 +63,18 @@ export default {
         this.$toast.open({
           type: "success",
           message: "Đăng nhập thành công",
-          position: "top-right"
+          position: "top-right",
+          duration: 2000
         });
         localStorage.setItem("currentUser", JSON.stringify(user));
         this.$router.push("/");
       } else {
-        alert("Tên người dùng hoặc mật khẩu không chính xác");
+        this.$toast.open({
+          type: "error",
+          message: "Tên người dùng hoặc mật khẩu không chính xác",
+          position: "top-right",
+          duration: 2000
+        });
       }
     }
   }

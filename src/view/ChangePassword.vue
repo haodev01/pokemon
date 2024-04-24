@@ -83,7 +83,8 @@ export default {
       this.$toast.open({
         type: "success",
         message: "ĐỔi mật khẩu thành công",
-        position: "top-right"
+        position: "top-right",
+        duration: 2000
       });
       localStorage.removeItem("currentUser");
       this.$router.push("/login");

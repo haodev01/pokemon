@@ -68,7 +68,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import { fetchPokemonDetails } from "../../api/api";    
+import { fetchPokemonDetails } from "../../api/api";
 export default {
   name: "Details",
   data() {
@@ -76,7 +76,7 @@ export default {
       details: null,
       showEditForm: false,
       editedName: "",
-      showAlert: false,
+      showAlert: false
     };
   },
   mounted() {
@@ -86,10 +86,10 @@ export default {
     fetchDetails() {
       const id = this.$route.params.id;
       fetchPokemonDetails(id)
-        .then((details) => {
+        .then(details => {
           this.details = details;
         })
-        .catch((error) => {
+        .catch(error => {
           console.error("Lỗi khi tìm thông tin pokemon ", error);
         });
     },
@@ -110,7 +110,7 @@ export default {
         id: this.details.id,
         name: this.editedName,
         image: this.details.image,
-        date: new Date().toLocaleString(),
+        date: new Date().toLocaleString()
       });
 
       this.showEditForm = false;
@@ -118,8 +118,8 @@ export default {
 
     cancelEdit() {
       this.showEditForm = false;
-    },
-  },
+    }
+  }
 };
 </script>
 
