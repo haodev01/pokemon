@@ -43,7 +43,7 @@
         <div class="stats">
           <h2>Stats</h2>
           <div class="chart">
-            <p>1</p>
+            <Bar :pokemon="details.stats" />
           </div>
         </div>
       </div>
@@ -69,17 +69,20 @@
 <script>
 import { mapActions } from "vuex";
 import { fetchPokemonDetails } from "../../api/api";
+import Bar from "./Bar.vue";
 export default {
   name: "Details",
+  components: { Bar },
   data() {
     return {
       details: null,
       showEditForm: false,
       editedName: "",
-      showAlert: false
+      showAlert: false,
+      stats: []
     };
   },
-  mounted() {
+  created() {
     this.fetchDetails();
   },
   methods: {
@@ -88,6 +91,8 @@ export default {
       fetchPokemonDetails(id)
         .then(details => {
           this.details = details;
+          this.stats = details.stats;
+          console.log("stats", details);
         })
         .catch(error => {
           console.error("Lỗi khi tìm thông tin pokemon ", error);

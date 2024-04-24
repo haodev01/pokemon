@@ -32,7 +32,8 @@ const fetchPokemonDetails = id => {
         height: data.height,
         weight: data.weight,
         abilities: data.abilities.map(ability => ability.ability.name),
-        types: data.types.map(({ type }) => type.name)
+        types: data.types.map(({ type }) => type.name),
+        stats: data.stats
       };
     })
     .catch(error => {

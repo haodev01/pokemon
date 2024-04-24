@@ -1,104 +1,51 @@
 <template>
-  <Bar
-    :chart-options="chartOptions"
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :dataset-id-key="datasetIdKey"
-    :plugins="plugins"
-    :css-classes="cssClasses"
-    :styles="styles"
-    :width="width"
-    :height="height"
-  />
+  <div>
+    <apexchart
+      width="500"
+      type="bar"
+      :options="chartOptions"
+      :series="series"
+    ></apexchart>
+  </div>
 </template>
-
 <script>
-import { Bar } from "vue-chartjs/legacy";
-
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale
-} from "chart.js";
-
-ChartJS.register(
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale
-);
-
 export default {
-  name: "BarChart",
-  components: {
-    Bar
-  },
   props: {
-    chartId: {
-      type: String,
-      default: "bar-chart"
-    },
-    datasetIdKey: {
-      type: String,
-      default: "label"
-    },
-    width: {
-      type: Number,
-      default: 400
-    },
-    height: {
-      type: Number,
-      default: 400
-    },
-    cssClasses: {
-      default: "",
-      type: String
-    },
-    styles: {
-      type: Object,
-      default: () => {}
-    },
-    plugins: {
+    pokemon: {
       type: Array,
       default: () => []
     }
   },
-  data() {
-    return {
-      chartData: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December"
-        ],
-        datasets: [
-          {
-            label: "Data One",
-            backgroundColor: "#f87979",
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
+
+  computed: {
+    chartOptions() {
+      console.log(this.pokemon);
+      return {
+        chart: {
+          id: "vuechart-example",
+          width: 100
+        },
+        xaxis: {
+          categories: this.pokemon.map(item => item.stat.name)
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 6,
+            dataLabels: {
+              position: "center" // top, center, bottom
+            }
           }
-        ]
-      },
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false
-      }
-    };
+        }
+      };
+    },
+    series() {
+      return [
+        {
+          name: "value",
+          data: this.pokemon.map(item => item.base_stat)
+        }
+      ];
+    }
   }
 };
 </script>
