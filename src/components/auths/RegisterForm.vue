@@ -1,0 +1,242 @@
+<template>
+  <div class="login-form">
+    <div class="container">
+      <div class="main">
+        <div class="content">
+          <h2>Đăng ký</h2>
+          <form @submit.prevent="submitForm" method="post">
+            <input
+              v-model="username"
+              type="text"
+              name=""
+              placeholder="Tên đăng nhập"
+              required
+              autofocus=""
+            />
+            <input
+              v-model="password"
+              type="password"
+              name=""
+              placeholder="Mật khẩu"
+              required
+              autofocus=""
+            />
+            <button class="btn" type="submit">
+              Đăng ký
+            </button>
+            <div class="error">{{ error }}</div>
+          </form>
+          <div class="flex">
+            <router-link to="/login">Đăng nhập</router-link>
+            <router-link to="/">Trở về trang chủ</router-link>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "register",
+  data() {
+    return {
+      username: "",
+      password: "",
+      error: "",
+      success: ""
+    };
+  },
+  methods: {
+    submitForm() {
+      if (this.username.length < 6)
+        return (this.error = " Tên đăng nhập chưa ít nhất 6 kí tự");
+      if (this.password.length < 6)
+        return (this.error = " Mật khẩu chứa ít nhất 6 kí tự");
+      const newUser = {
+        username: this.username,
+        password: this.password
+      };
+      let existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+      const userExists = existingUsers.some(
+        user => user.username === newUser.username
+      );
+
+      if (userExists) {
+        this.error = "Tên người dùng đã tồn tại. Vui lòng chọn tên khác.";
+      } else {
+        existingUsers.push(newUser);
+
+        localStorage.setItem("users", JSON.stringify(existingUsers));
+
+        this.$toast.open({
+          type: "success",
+          message: "Đăng ký tài khoản thành công",
+          position: "top-right"
+        });
+        // this.error = "";
+        this.$router.push("/login");
+      }
+    }
+  }
+};
+</script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.login-form {
+  position: relative;
+  min-height: 100vh;
+  z-index: 0;
+  background: #4e34b6;
+  padding: 30px;
+  justify-content: center;
+  display: grid;
+  font-family: "poppins", sans-serif;
+
+  grid-template-rows: 1fr auto 1fr;
+  align-items: center;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.login-form h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #fff;
+  font-family: "poppins", sans-serif;
+}
+.login-form h2 {
+  line-height: 40px;
+  margin-bottom: 5px;
+  font-size: 30px;
+  font-weight: 500;
+  color: #272346;
+  text-align: center;
+}
+.login-form .main {
+  position: relative;
+  display: flex;
+  margin: 30px 0;
+}
+.content {
+  padding: 3em 3em;
+  background: #fff;
+  box-shadow: 2px 9px 49px -17px rgba(0, 0, 0, 0.1);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.form-img {
+  flex-basis: 50%;
+  background: #dfe5ea;
+  background-size: cover;
+  padding: 40px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  align-items: center;
+  display: grid;
+}
+.form-img img {
+  max-width: 100%;
+}
+p {
+  color: #666;
+  font-size: 16px;
+  line-height: 25px;
+  opacity: 0.6;
+  text-align: center;
+}
+.btn,
+button,
+input {
+  border-radius: 35px;
+}
+.btn:hover,
+button:hover {
+  color: #272346;
+  transition: 0.5s ease;
+}
+a {
+  text-decoration: none;
+}
+.login-form form {
+  margin: 30px 0;
+}
+.login-form input {
+  outline: none;
+  margin-bottom: 15px;
+  font-stretch: 16px;
+  color: #999;
+  text-align: left;
+  padding: 14px 20px;
+  width: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+  border: none;
+  background: #f7fafc;
+  transition: 0.3s ease;
+  border: 1px solid transparent;
+}
+.login-form input:focus {
+  background: transparent;
+  border: 1px solid #4e34b6;
+}
+
+.login-form button {
+  font-size: 18px;
+  color: #fff;
+  width: 100%;
+  background: #4e34b6;
+  border: none;
+  padding: 14px 15px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+p.account a {
+  color: #4e34b6;
+}
+p.account a:hover {
+  text-decoration: underline;
+}
+@media (max-width: 736px) {
+  .login-form .main {
+    flex-direction: column;
+  }
+  .login-form form {
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  .form-img {
+    border-radius: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    order: 2;
+  }
+  .content {
+    order: 1;
+    border-radius: 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+}
+.error {
+  color: red;
+  margin-top: 10px;
+}
+</style>
